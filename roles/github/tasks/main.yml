@@ -34,7 +34,7 @@
 - name: check for ssh folder
   become: yes
   become_user: root
-  command: |
+  shell: |
     ssh_folder="~/.ssh" 
     if [ ! -d "$ssh_folder" ]; then mkdir -p "$ssh_folder" 
     chmod 700 "$ssh_folder" 
@@ -47,7 +47,7 @@
 - name: add private ssh key to ssh agent
   become: yes
   become_user: root
-  command: ssh-add ~/.ssh/github_ssh
+  shell: ssh-add ~/.ssh/github_ssh
 - name: pause to add the public key to github
   pause:
     prompt: "Add the public ssh key to github. After that press any key to continue."
