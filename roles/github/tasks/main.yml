@@ -1,46 +1,46 @@
-git_username: Ramonnn
-git_email: d29675067+Ramonnn@users.noreply.github.com
-git_defaultbranch: main
+vars:
+  git_username: Ramonnn
+  git_email: d29675067+Ramonnn@users.noreply.github.com
+  git_defaultbranch: main
 
-tasks:
-  - name: Install Git
-    apt:
-      name: git
-      state: present
-      update_cache: yes
+- name: Install Git
+  apt:
+    name: git
+    state: present
+    update_cache: yes
 
-  - name: Set Git username
-    git_config:
-      name: user.name
-      value: "{{ git_username }}"
-      scope: global
-    when: git_username is defined
+- name: Set Git username
+  git_config:
+    name: user.name
+    value: "{{ git_username }}"
+    scope: global
+  when: git_username is defined
 
-  - name: Set Git email
-    git_config:
-      name: user.email
-      value: "{{ git_email }}"
-      scope: global
-    when: git_email is defined
+- name: Set Git email
+  git_config:
+    name: user.email
+    value: "{{ git_email }}"
+    scope: global
+  when: git_email is defined
 
-  - name: Set Git default branch
-    git_config:
-      name: init.defaultBranch
-      value: "{{ git_defaultbranch }}"
-      scope: global
-    when: git_defaultbranch is defined
+- name: Set Git default branch
+  git_config:
+    name: init.defaultBranch
+    value: "{{ git_defaultbranch }}"
+    scope: global
+  when: git_defaultbranch is defined
 
-  - name: Generate SSH key
-    community.crypto.openssh_keypair:
-      path: ~/.ssh/github_ssh
-      comment: "{{ git_email }}"
-      type: "ed25519"
-  - name: start ssh-agent
-    shell:
-      cmd: 'eval "$(ssh-agent -s)"'
-  - name: add private ssh key to ssh agent
-    shell:
-      cmd: "ssh-add ~/.ssh/github_ssh"
-  - name: pause to add the public key to github
-    pause:
-      prompt: "Add the public ssh key to github. After that press any key to continue."
+- name: Generate SSH key
+  community.crypto.openssh_keypair:
+    path: ~/.ssh/github_ssh
+    comment: "{{ git_email }}"
+    type: "ed25519"
+- name: start ssh-agent
+  shell:
+    cmd: 'eval "$(ssh-agent -s)"'
+- name: add private ssh key to ssh agent
+  shell:
+    cmd: "ssh-add ~/.ssh/github_ssh"
+- name: pause to add the public key to github
+  pause:
+    prompt: "Add the public ssh key to github. After that press any key to continue."
