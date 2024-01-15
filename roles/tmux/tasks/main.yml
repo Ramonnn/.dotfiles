@@ -1,0 +1,13 @@
+- name: Installs tmux | apt
+  become: yes
+  become_user: root
+  apt:
+    name: tmux
+    state: present
+
+- name: Links .tmux.conf file | file
+  file:
+    src: "{{ lookup('env', 'ROOTDIR') }}/roles/tmux/files/.tmux.conf"
+    dest: "{{ lookup('env', 'HOME') }}/.tmux.conf"
+    state: link
+    force: yes
