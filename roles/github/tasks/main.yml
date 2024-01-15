@@ -40,7 +40,7 @@
         type: "ed25519"
     - name: start ssh-agent
       shell:
-        cmd: "eval "$(ssh-agent -s)""
+        cmd: 'eval "$(ssh-agent -s)"'
     - name: add private ssh key to ssh agent
       shell:
         cmd: "ssh-add ~/.ssh/github_ssh"
