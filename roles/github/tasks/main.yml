@@ -25,11 +25,6 @@
     scope: global
   when: git_defaultbranch is defined
 
-- name: Generate SSH key
-  community.crypto.openssh_keypair:
-    path: ~/.ssh/github_ssh
-    comment: "{{ git_email }}"
-    type: "ed25519"
 - name: start ssh-agent
   become: yes
   become_user: root
@@ -38,6 +33,11 @@
   become: yes
   become_user: root
   command: ssh_folder="$HOME/.ssh"; if [ ! -d "$ssh_folder" ]; then mkdir -p "$ssh_folder"; chmod 700 "$ssh_folder"; fi
+- name: Generate SSH key
+  community.crypto.openssh_keypair:
+    path: ~/.ssh/github_ssh
+    comment: "{{ git_email }}"
+    type: "ed25519"
 - name: add private ssh key to ssh agent
   become: yes
   become_user: root
