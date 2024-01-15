@@ -4,6 +4,8 @@
     git_username: Ramonnn
     git_email: d29675067+Ramonnn@users.noreply.github.com
     git_defaultbranch: main
+    repo: "git@github.com:Ramonnn/lazy-nvim-setup.git"
+    dest: "~/.config/nvim/"
   roles:
     - role: github
       tags:

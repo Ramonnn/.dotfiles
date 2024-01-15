@@ -1,12 +1,4 @@
-- name: Deploy lazynvim setup
-  hosts: all
-  vars:
-    repo: "git@github.com:Ramonnn/lazy-nvim-setup.git"
-    dest: "~/.config/nvim/"
-    sshkey: "~/.ssh/id_rsa" # change to proper file name!
-  tasks:
-    - name: checkout and clone git repo
-      git:
-        repo: "{{ repo }}"
-        dest: "{{ dest }}"
-        key_file: "{{ sshkey }}"
+- name: checkout and clone git repo
+  git:
+    repo: "{{ repo }}"
+    dest: "{{ dest }}"
