@@ -1,9 +1,9 @@
 - name: Set up local workstation
   hosts: local
   roles:
-    - role: git
+    - role: github
       tags:
-        -git
+        -github
     - role: zsh
       tags:
         - zsh
