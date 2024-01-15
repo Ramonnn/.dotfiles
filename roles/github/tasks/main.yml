@@ -30,7 +30,7 @@
 - name: start ssh-agent
   become: yes
   become_user: root
-  command: eval "$(ssh-agent -s)"
+  shell: 'eval "$(ssh-agent -s)"'
 - name: check for ssh folder
   become: yes
   become_user: root
