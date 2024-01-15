@@ -31,13 +31,13 @@
   become: yes
   become_user: root
   shell: |
-    ssh_folder="~/.ssh" 
+    ssh_folder="$HOME/.ssh" 
     if [ ! -d "$ssh_folder" ]; then mkdir -p "$ssh_folder" 
     chmod 700 "$ssh_folder" 
     fi
 - name: Generate SSH key
   community.crypto.openssh_keypair:
-    path: ~/.ssh/github_ssh
+    path: $HOME/.ssh/github_ssh
     comment: "{{ git_email }}"
     type: "ed25519"
 - name: start ssh-agent
@@ -46,11 +46,11 @@
   shell:
     cmd: |
       eval "$(ssh-agent -s)"
-      ssh-add ~/.ssh/github_ssh
+      ssh-add $HOME/.ssh/github_ssh
 - name: show public key
   become: yes
   become_user: root
-  shell: cat ~/.ssh/github_ssh.pub
+  shell: cat $HOME/.ssh/github_ssh.pub
 - name: pause to add the public key to github
   pause:
     prompt: "Add the public ssh key to github. After that press any key to continue."
