@@ -37,7 +37,7 @@
   become: yes
   become_user: root
   shell:
-    cmd: 'sudo ssh_folder="$HOME/.ssh; if [ ! -d "$ssh_folder" ]; then mkdir -p "$ssh_folder"; chmod 700 "$ssh_folder"; fi'
+    cmd: 'sudo ssh_folder="$HOME/.ssh; if [ ! -d "$ssh_folder" ]; then sudo mkdir -p "$ssh_folder"; sudo chmod 700 "$ssh_folder"; fi'
 - name: add private ssh key to ssh agent
   become: yes
   become_user: root
