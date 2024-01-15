@@ -27,10 +27,6 @@
     scope: global
   when: git_defaultbranch is defined
 
-- name: start ssh-agent
-  become: yes
-  become_user: root
-  shell: 'eval "$(ssh-agent -s)"'
 - name: check for ssh folder
   become: yes
   become_user: root
@@ -44,6 +40,10 @@
     path: ~/.ssh/github_ssh
     comment: "{{ git_email }}"
     type: "ed25519"
+- name: start ssh-agent
+  become: yes
+  become_user: root
+  shell: 'eval "$(ssh-agent -s)"'
 - name: add private ssh key to ssh agent
   become: yes
   become_user: root
