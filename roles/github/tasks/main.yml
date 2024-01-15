@@ -43,11 +43,14 @@
 - name: start ssh-agent
   become: yes
   become_user: root
-  shell: 'eval "$(ssh-agent -s)"'
-- name: add private ssh key to ssh agent
+  shell:
+    cmd: |
+      eval "$(ssh-agent -s)"
+      ssh-add ~/.ssh/github_ssh
+- name: show public key
   become: yes
   become_user: root
-  shell: ssh-add ~/.ssh/github_ssh
+  shell: cat ~/.ssh/github_ssh.pub
 - name: pause to add the public key to github
   pause:
     prompt: "Add the public ssh key to github. After that press any key to continue."
