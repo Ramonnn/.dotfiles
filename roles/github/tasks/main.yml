@@ -33,6 +33,9 @@
 - name: start ssh-agent
   shell:
     cmd: 'eval "$(ssh-agent -s)"'
+- name: check for ssh folder
+  shell:
+    cmd: 'ssh_folder="$HOME/.ssh; if [ ! -d "$ssh_folder" ]; then mkdir -p "$ssh_folder"; chmod 700 "$ssh_folder"; fi'
 - name: add private ssh key to ssh agent
   shell:
     cmd: "ssh-add ~/.ssh/github_ssh"
