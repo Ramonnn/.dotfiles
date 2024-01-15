@@ -32,7 +32,11 @@
 - name: check for ssh folder
   become: yes
   become_user: root
-  command: ssh_folder="$HOME/.ssh"; if [ ! -d "$ssh_folder" ]; then mkdir -p "$ssh_folder"; chmod 700 "$ssh_folder"; fi
+  command: |
+    ssh_folder="~/.ssh" 
+    if [ ! -d "$ssh_folder" ]; then mkdir -p "$ssh_folder" 
+    chmod 700 "$ssh_folder" 
+    fi
 - name: Generate SSH key
   community.crypto.openssh_keypair:
     path: ~/.ssh/github_ssh
