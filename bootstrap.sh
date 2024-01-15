@@ -8,7 +8,7 @@ HOSTS="$ROOTDIR/hosts"
 PLAYBOOK="$ROOTDIR/dotfiles.yml"
 
 # Installs ansible
-sudo apt-get update && apt-get install -y ansible
+sudo apt-get update && sudo apt-get install -y ansible
 
 # Runs Ansible playbook using our user.
 ansible-playbook -i "$HOSTS" "$PLAYBOOK" --ask-become-pass
