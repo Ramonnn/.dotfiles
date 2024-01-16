@@ -42,6 +42,7 @@
     cmd: |
       eval "$(command -v ssh-agent) -s"
       export SSH_AUTH_SOCK
+      export SSH_AGENT_PID
       ssh-add ~/.ssh/github_ssh
 
 - name: Generate SSH key
