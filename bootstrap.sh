@@ -12,7 +12,7 @@ PLAYBOOK_2="$ROOTDIR/dotfiles_2.yml"
 # Installs ansible
 sudo apt-get update && sudo apt-get install -y ansible
 
-ssh-keygen -t ed25519 -C "git@github.com:Ramonnn/lazy-nvim-setup.git" -f ~/.ssh/github_ssh -q -N ""
+ssh-keygen -t ed25519 -C "29675067+Ramonnn@users.noreply.github.com" -f ~/.ssh/github_ssh -q -N ""
 eval "$(ssh-agent -s)"
 ssh-add ~/.ssh/github_ssh
 
