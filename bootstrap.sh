@@ -15,8 +15,7 @@ sudo apt-get update && sudo apt-get install -y ansible
 if [ -e "~/.ssh/github_ssh" ]; then 
   echo "ssh file already exists."  
 else
-  ssh-keygen -t ed25519 -C "" -f ~/.ssh/github_ssh -q -N ""
-    repo: "git@github.com:Ramonnn/lazy-nvim-setup.git"
+  ssh-keygen -t ed25519 -C "git@github.com:Ramonnn/lazy-nvim-setup.git" -f ~/.ssh/github_ssh -q -N ""
   eval "$(ssh-agent -s)"
   ssh-add ~/.ssh/github_ssh
 fi
