@@ -1,0 +1,10 @@
+- name: Set up local workstation
+  hosts: local
+  vars:
+    git_username: Ramonnn
+    git_email: 29675067+Ramonnn@users.noreply.github.com
+    git_defaultbranch: main
+  roles:
+    - role: github
+      tags:
+        - github

@@ -4,13 +4,31 @@ set -e
 ROOTDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # Host file location
 HOSTS="$ROOTDIR/hosts"
-# Main playbook
-PLAYBOOK="$ROOTDIR/dotfiles.yml"
+# Playbook 1
+PLAYBOOK_1="$ROOTDIR/dotfiles_1.yml"
+# Playbook 2
+PLAYBOOK_2="$ROOTDIR/dotfiles_2.yml"
 
 # Installs ansible
 sudo apt-get update && sudo apt-get install -y ansible
 
-# Runs Ansible playbook using our user.
-ansible-playbook -vvv -i "$HOSTS" "$PLAYBOOK" --ask-become-pass
+if [ -e "~/.ssh/github_ssh"]; then 
+  echo "ssh file already exists."  
+else
+  ssh-keygen -t ed25519 -C "29675067+Ramonnn@users.noreply.github.com" -f ~/.ssh/github_ssh -q -N ""
+  eval "$(ssh-agent -s)"
+  ssh-add ~/.ssh/github_ssh
+fi
+
+# Runs the first Ansible playbook using our user.
+ansible-playbook -vvv -i "$HOSTS" "$PLAYBOOK_1" --ask-become-pass
+
+# Prompt the public ssh key
+cat ~/.ssh/github_ssh.pub
+echo "Add the public SSH key to your GitHub Account. Press Enter to continue..."
+read -r
+
+# Runs the second Ansible playbook using our user.
+ansible-playbook -vvv -i "$HOSTS" "$PLAYBOOK_2" --ask-become-pass
 
 exit 0

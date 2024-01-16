@@ -32,33 +32,3 @@
     path: "{{ ansible_env.HOME }}/.ssh"
     state: directory
     mode: "0700"
-
-- name: Check if ssh key exists
-  stat:
-    path: "~/.ssh/github_ssh"
-  register: ssh_key_stat
-
-- name: start ssh-agent
-  shell:
-    cmd: |
-      if [ "{{ ssh_key_stat.stat.exists }}" != "True" ]; then 
-        ssh-keygen -t ed25519 -C "{{ git_email }}" -f ~/.ssh/github_ssh -q -N ""
-        eval "$(ssh-agent -s)"
-        ssh-add ~/.ssh/github_ssh
-      fi
-
-- name: show public key
-  command: "cat ~/.ssh/github_ssh.pub"
-  register: public_key_output
-
-- name: debug prompt through on terminal
-  debug:
-    var: public_key_output.stdout_lines
-
-- name: pause to add the public key to github
-  pause:
-    prompt: "Add the public ssh key to github. After that press enter to continue."
-
-- name: ensure GitHub is a known host
-  shell:
-    cmd: ssh-keyscan github.com >> ~/.ssh/known_hosts
