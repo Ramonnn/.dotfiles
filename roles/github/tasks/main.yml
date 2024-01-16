@@ -40,9 +40,7 @@
   become_user: root
   shell:
     cmd: |
-      eval "$(command -v ssh-agent) -s"
-      export SSH_AUTH_SOCK
-      export SSH_AGENT_PID
+      eval "$(ssh-agent)"
       ssh-add ~/.ssh/github_ssh
 
 - name: Generate SSH key
