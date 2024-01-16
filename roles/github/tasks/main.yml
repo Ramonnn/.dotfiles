@@ -35,19 +35,20 @@
     state: directory
     mode: "0700"
 
-- name: Generate SSH key
-  community.crypto.openssh_keypair:
-    path: "~/.ssh/github_ssh"
-    comment: "{{ git_email }}"
-    type: "ed25519"
-
 - name: start ssh-agent
   become: yes
   become_user: root
   shell:
     cmd: |
-      'eval "$(ssh-agent -s)"'
-      "ssh-add ~/.ssh/github_ssh"
+      eval "$(command -v ssh-agent) -s"
+      export SSH_AUTH_SOCK
+      ssh-add ~/.ssh/github_ssh
+
+- name: Generate SSH key
+  community.crypto.openssh_keypair:
+    path: "~/.ssh/github_ssh"
+    comment: "{{ git_email }}"
+    type: "ed25519"
 
 - name: show public key
   become: yes
