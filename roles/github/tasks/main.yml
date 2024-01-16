@@ -35,13 +35,10 @@
     if [ ! -d "$ssh_folder" ]; then 
       mkdir -p "$ssh_folder" 
       chmod 700 "$ssh_folder"
-      echo "Created ssh folder"
-    else
-      echo "ssh folder already exists"
     fi
 - name: Generate SSH key
   community.crypto.openssh_keypair:
-    path: ~/.ssh/github_ssh
+    path: "~/.ssh/github_ssh"
     comment: "{{ git_email }}"
     type: "ed25519"
 - name: start ssh-agent
@@ -49,12 +46,16 @@
   become_user: root
   shell:
     cmd: |
-      eval "$(ssh-agent -s)"
-      ssh-add ~/.ssh/github_ssh
+      'eval "$(ssh-agent -s)"'
+      "ssh-add ~/.ssh/github_ssh"
 - name: show public key
   become: yes
   become_user: root
-  shell: cat ~/.ssh/github_ssh.pub
+  command: "cat ~/.ssh/github_ssh.pub"
+  register: public_key_output
+- name: debug promt through on terminal
+  debug:
+    var: public_key_output.stdout_lines
 - name: pause to add the public key to github
   pause:
     prompt: "Add the public ssh key to github. After that press any key to continue."
