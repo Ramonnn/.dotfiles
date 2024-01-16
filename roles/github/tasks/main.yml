@@ -47,7 +47,7 @@
     cmd: |
       if [ "{{ ssh_key_stat.stat.exists }}" != "1" ]; then 
         ssh-keygen -t ed25519 -C "{{ git_email }}" -f ~/.ssh/github_ssh -q -N ""
-        eval "$(ssh-agent)"
+        eval "$(ssh-agent -s)"
         ssh-add ~/.ssh/github_ssh
       fi
 
@@ -64,3 +64,11 @@
 - name: pause to add the public key to github
   pause:
     prompt: "Add the public ssh key to github. After that press enter to continue."
+
+- name: ensure GitHub is a known host
+  known_hosts:
+    name: github.com
+    key: "{{ lookup('file', '~/.ssh/github_ssh.pub') }}"
+    path: ~/.ssh/known_hosts
+    state: present
+    global: yes

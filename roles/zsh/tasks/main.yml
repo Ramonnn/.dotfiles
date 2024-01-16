@@ -35,6 +35,7 @@
     dest: "{{ lookup('env', 'HOME') }}/.zshrc"
     state: link
     force: yes
+    follow: no
 
 - name: Links .p10k.zsh file | file
   file:
