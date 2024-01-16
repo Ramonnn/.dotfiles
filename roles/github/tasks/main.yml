@@ -39,15 +39,19 @@
   become: yes
   become_user: root
   shell:
-    cmd: |
-      eval "$(ssh-agent)"
-      ssh-add ~/.ssh/github_ssh
+    cmd: eval "$(ssh-agent)"
 
 - name: Generate SSH key
   community.crypto.openssh_keypair:
     path: "~/.ssh/github_ssh"
     comment: "{{ git_email }}"
     type: "ed25519"
+
+- name: add ssh to ssh agent
+  become: yes
+  become_user: root
+  shell:
+    cmd: ssh-add ~/.ssh/github_ssh
 
 - name: show public key
   become: yes
