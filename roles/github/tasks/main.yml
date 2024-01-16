@@ -34,15 +34,11 @@
     mode: "0700"
 
 - name: Check if ssh key exists
-  become: yes
-  become_user: root
   stat:
     path: "~/.ssh/github_ssh"
   register: ssh_key_stat
 
 - name: start ssh-agent
-  become: yes
-  become_user: root
   shell:
     cmd: |
       if [ "{{ ssh_key_stat.stat.exists }}" != "1" ]; then 
@@ -52,8 +48,6 @@
       fi
 
 - name: show public key
-  become: yes
-  become_user: root
   command: "cat ~/.ssh/github_ssh.pub"
   register: public_key_output
 
