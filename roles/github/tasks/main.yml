@@ -27,12 +27,13 @@
     scope: global
   when: git_defaultbranch is defined
 
-- name: check for ssh folder
+- name: create ssh folder
   become: yes
   become_user: root
-  command: >
-    mkdir -p "{{ ansible_env.HOME }}/.ssh"
-    chmod 700 "{{ ansible_env.HOME }}/.ssh"
+  file:
+    path: "{{ ansible_env.HOME }}/.ssh"
+    state: directory
+    mode: "0700"
 
 - name: Generate SSH key
   community.crypto.openssh_keypair:
