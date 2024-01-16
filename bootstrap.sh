@@ -11,6 +11,6 @@ PLAYBOOK="$ROOTDIR/dotfiles.yml"
 sudo apt-get update && sudo apt-get install -y ansible
 
 # Runs Ansible playbook using our user.
-ansible-playbook -i "$HOSTS" "$PLAYBOOK" --ask-become-pass
+ansible-playbook -vvv -i "$HOSTS" "$PLAYBOOK" --ask-become-pass
 
 exit 0
