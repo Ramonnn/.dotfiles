@@ -15,7 +15,7 @@ sudo apt-get update && sudo apt-get install -y ansible
 # Runs the first Ansible playbook using our user.
 ansible-playbook -vvv -i "$HOSTS" "$PLAYBOOK_1" --ask-become-pass
 
-if [-e "~/.ssh/github_ssh" ]; then 
+if [ -e "~/.ssh/github_ssh" ]; then 
   echo "File exists!"
 else
   ssh-keygen -t ed25519 -C "29675067+Ramonnn@users.noreply.github.com" -f ~/.ssh/github_ssh -q -N ""
