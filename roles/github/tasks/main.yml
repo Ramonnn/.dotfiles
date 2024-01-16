@@ -59,3 +59,6 @@
   pause:
     prompt: "Add the public ssh key to github. After that press enter to continue."
 
+- name: ensure GitHub is a known host
+  shell:
+    cmd: ssh-keyscan github.com >> ~/.ssh/known_hosts
