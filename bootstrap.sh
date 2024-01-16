@@ -12,12 +12,12 @@ PLAYBOOK_2="$ROOTDIR/dotfiles_2.yml"
 # Installs ansible
 sudo apt-get update && sudo apt-get install -y ansible
 
+# Runs the first Ansible playbook using our user.
+ansible-playbook -vvv -i "$HOSTS" "$PLAYBOOK_1" --ask-become-pass
+
 ssh-keygen -t ed25519 -C "29675067+Ramonnn@users.noreply.github.com" -f ~/.ssh/github_ssh -q -N ""
 eval "$(ssh-agent -s)"
 ssh-add ~/.ssh/github_ssh
-
-# Runs the first Ansible playbook using our user.
-ansible-playbook -vvv -i "$HOSTS" "$PLAYBOOK_1" --ask-become-pass
 
 # Prompt the public ssh key
 cat ~/.ssh/github_ssh.pub
