@@ -71,4 +71,3 @@
     key: "{{ lookup('file', '~/.ssh/github_ssh.pub') }}"
     path: ~/.ssh/known_hosts
     state: present
-    global: yes
