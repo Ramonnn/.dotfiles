@@ -15,7 +15,7 @@
 - name: Sets zsh as default shell for my user | command
   become: yes
   become_user: root
-  command: chsh -s /bin/zsh {{ lookup('env' 'USER') }}
+  command: chsh -s /bin/zsh {{ lookup('env', 'USER') }}
   register: zsh_for_user
   failed_when: zsh_for_user.rc >= 1
   changed_when: zsh_for_user.rc == 0

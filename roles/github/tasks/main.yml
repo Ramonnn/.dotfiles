@@ -28,8 +28,6 @@
   when: git_defaultbranch is defined
 
 - name: create ssh folder
-  become: yes
-  become_user: root
   file:
     path: "{{ ansible_env.HOME }}/.ssh"
     state: directory
@@ -59,10 +57,10 @@
   command: "cat ~/.ssh/github_ssh.pub"
   register: public_key_output
 
-- name: debug promt through on terminal
+- name: debug prompt through on terminal
   debug:
     var: public_key_output.stdout_lines
 
 - name: pause to add the public key to github
   pause:
-    prompt: "Add the public ssh key to github. After that press any key to continue."
+    prompt: "Add the public ssh key to github. After that press enter to continue."
