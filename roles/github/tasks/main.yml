@@ -62,6 +62,5 @@
 - name: ensure GitHub is a known host
   known_hosts:
     name: github.com
-    key: "{{ lookup('file', '~/.ssh/github_ssh.pub') }}"
-    path: ~/.ssh/known_hosts
+    key: "github.com ssh-ed25519 {{ lookup('file', '~/.ssh/github_ssh.pub') }}"
     state: present
