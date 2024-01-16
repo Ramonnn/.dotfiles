@@ -35,14 +35,23 @@
     state: directory
     mode: "0700"
 
+- name: Check if ssh key exists
+  become: yes
+  become_user: root
+  stat:
+    path: "~/.ssh/github_ssh"
+  register: ssh_key_stat
+
 - name: start ssh-agent
   become: yes
   become_user: root
   shell:
     cmd: |
-      ssh-keygen -t ed25519 -C "{{ git_email }}" -f ~/.ssh/github_ssh -q -N ""
-      eval "$(ssh-agent)"
-      ssh-add ~/.ssh/github_ssh
+      if [ "{{ ssh_key_stat.stat.exists }}" != "1" ]; then 
+        ssh-keygen -t ed25519 -C "{{ git_email }}" -f ~/.ssh/github_ssh -q -N ""
+        eval "$(ssh-agent)"
+        ssh-add ~/.ssh/github_ssh
+      fi
 
 - name: show public key
   become: yes
