@@ -27,7 +27,7 @@
           - fzf
           - unzip
           - tar
-          - build-essentials
+          - build-essential
           - npm
         state: present
 
