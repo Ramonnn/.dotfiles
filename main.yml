@@ -102,7 +102,7 @@
         cmd: |
           sudo curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage -o ~/nvim.appimage
           sudo chmod u+x nvim.appimage
-          sudo ln -s ~/.dotfiles/nvim.appimage /usr/bin/nvim
+          sudo ln -sf ~/.dotfiles/nvim.appimage /usr/bin/nvim
 
     - name: symlink nvim setup
       ansible.builtin.file:
