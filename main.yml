@@ -122,10 +122,9 @@
           sudo ln -sf ~/.dotfiles/nvim.appimage /usr/bin/nvim
     
     - name: copy nvim setup
-      ansible.builtin.file:
+      ansible.builtin.copy:
         src: "~{{ remote_regular_user }}/.dotfiles/nvim"
         dest: "~{{ remote_regular_user }}/.config"
-        state: directory
         owner: "{{ remote_regular_user }}"
 
     - name: Esure fonts directory
