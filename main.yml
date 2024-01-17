@@ -1,0 +1,137 @@
+---
+- name: Machine setup
+  hosts: localhost
+  vars:
+    git_username: Ramonnn
+    git_email: 29675067+Ramonnn@users.noreply.github.com
+    git_defaultbranch: main
+    repo: "git@github.com:Ramonnn/lazy-nvim-setup.git"
+    dest: "~/.config/nvim/"
+  become: true
+  connection: local
+  gather_facts: true
+
+  tasks:
+    - name: Get my user
+      ansible.builtin.set_fact:
+        remote_regular_user: "{{ ansible_env.SUDO_USER or ansible_user_id }}"
+
+    - name: Installs packages | apt
+      ansible.builtin.apt:
+        name:
+          - git
+          - curl
+          - vim
+          - zsh
+          - tmux
+          - fzf
+        state: present
+
+    - name: Sets zsh as default shell for my user | command
+      ansible.builtin.user:
+        name: "{{ remote_regular_user }}"
+        shell: /usr/bin/zsh
+
+    - name: Checks for oh-my-zsh installation | stat 
+      stat:
+        path: "~{{ remote_regular_user }}/.oh-my-zsh"
+      register: oh_my_zsh_stat
+
+    - name: Installs oh-my-zsh | shell
+      ansible.builtin.shell:
+        cmd: sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+      when: not oh_my_zsh_stat.stat.exists
+
+    - name: Links .zshrc file | file
+      file:
+        src: "~{{ remote_regular_user }}/.dotfiles/.zshrc"
+        dest: "~{{ remote_regular_user }}/.zshrc"
+        state: link
+        force: yes
+        follow: no
+
+    - name: Links .p10k.zsh file | file
+      file:
+        src: "~{{ remote_regular_user }}/.dotfiles/.p10k.zsh"
+        dest: "~{{ remote_regular_user }}/.p10k.zsh"
+        state: link
+        force: yes
+
+    - name: Links .tmux.conf file | file
+      file:
+        src: "~{{ remote_regular_user }}/.dotfiles/.tmux.conf"
+        dest: "~{{ remote_regular_user }}/.tmux.conf"
+        state: link
+        force: yes
+
+    - name: Set Git username
+      git_config:
+        name: user.name
+        value: "{{ git_username }}"
+        scope: global
+      when: git_username is defined
+
+    - name: Set Git email
+      git_config:
+        name: user.email
+        value: "{{ git_email }}"
+        scope: global
+      when: git_email is defined
+
+    - name: Set Git default branch
+      git_config:
+        name: init.defaultBranch
+        value: "{{ git_defaultbranch }}"
+        scope: global
+      when: git_defaultbranch is defined
+
+    - name: Ensure ssh folder exists
+      ansible.builtin.file:
+        path: "~{{ remote_regular_user }}/.ssh"
+        state: directory
+        mode: "0755"
+        owner: "{{ remote_regular_user }}"
+    
+    - name: Install neovim
+      ansible.builtin.shell:
+        cmd: |
+          curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+          chmod u+x nvim.appimage
+          ~/nvim.appimage
+          sudo ln -s ~/nvim.appimage /usr/bin/nvim
+
+    - name: symlink nvim setup
+      ansible.builtin.file:
+        src: "~{{ remote_regular_user }}/.dotfiles/nvim"
+        dest: "~{{ remote_regular_user }}/.config/nvim"
+        state: link
+        force: yes
+        owner: "{{ remote_regular_user }}"
+
+    - name: Install Terraform
+      ansible.builtin.apt:
+        name: terraform
+        state: present
+
+    - name: Esure fonts directory
+      ansible.builtin.file:
+        path: "~{{ remote_regular_user }}/.fonts"
+        state: directory
+        mode: "0755"
+        owner: "{{ remote_regular_user }}"
+
+    - name: Check if Jetbrains Mono exists
+      ansible.builtin.shell: "ls ~{{ remote_regular_user }}/.fonts/JetBrainsMonoNerd*FontMono*"
+      register: jetbrains_mono_exists
+      ignore_errors: true
+      changed_when: false
+
+    - name: Download JetBrains Mono
+      when: jetbrains_mono_exists is failed
+      ansible.builtin.unarchive:
+        src: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/JetBrainsMono.zip
+        dest: "~{{ remote_regular_user }}/.fonts/"
+        remote_src: true
+        mode: "0755"
+        owner: "{{ remote_regular_user }}"
+

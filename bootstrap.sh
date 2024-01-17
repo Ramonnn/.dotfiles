@@ -1,19 +1,10 @@
-set -e
-
-# Dotfiles' project root directory
-ROOTDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-# Host file location
-HOSTS="$ROOTDIR/hosts"
-# Playbook 1
-PLAYBOOK_1="$ROOTDIR/dotfiles_1.yml"
-# Playbook 2
-PLAYBOOK_2="$ROOTDIR/dotfiles_2.yml"
+#!/bin/bash
 
 # Installs ansible
 sudo apt-get update && sudo apt-get install -y ansible
 
 # Runs the first Ansible playbook using our user.
-ansible-playbook -vvv -i "$HOSTS" "$PLAYBOOK_1" --ask-become-pass
+ansible-playbook -vvv ~/main.yml --ask-become-pass
 
 if [ -f ~/.ssh/github_ssh ]; then 
   echo "File exists!"
@@ -28,6 +19,3 @@ cat ~/.ssh/github_ssh.pub
 echo "Add the public key to your GitHub account. Press Enter to continue..."
 read -r
 
-# Runs the second Ansible playbook using our user.
-ansible-playbook -vvv -i "$HOSTS" "$PLAYBOOK_2" --ask-become-pass
-exit 0
