@@ -100,7 +100,7 @@
     - name: Install neovim
       ansible.builtin.shell:
         cmd: |
-          curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+          curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage -o ~/nvim.appimage
           chmod u+x nvim.appimage
           ./nvim.appimage
           sudo ln -s ~/.dotfiles/nvim.appimage /usr/bin/nvim
