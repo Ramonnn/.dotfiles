@@ -116,10 +116,12 @@
 
     - name: Install neovim
       ansible.builtin.shell:
-        cmd: |
-          sudo curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage -o ~/nvim.appimage
-          sudo chmod u+x nvim.appimage
-          sudo ln -sf ~/.dotfiles/nvim.appimage /usr/bin/nvim
+      become: true
+      become_user: {{ lookup('env', 'USER') }}
+      cmd: |
+          curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage -o ~/nvim.appimage
+          chmod u+x nvim.appimage
+          ln -sf ~/.dotfiles/nvim.appimage /usr/bin/nvim
     
     - name: copy nvim setup
       ansible.builtin.copy:
