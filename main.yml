@@ -55,17 +55,17 @@
     - name: clone zsh-autosuggestions
       ansible.builtin.git:
         repo: https://github.com/zsh-users/zsh-autosuggestions.git
-        dest: ~/.oh-my-zsh/custom/plugins
+        dest: ~{{ remote_regular_user }}/.oh-my-zsh/custom/plugins
 
     - name: clone zsh-sytnax-highlighting
       ansible.builtin.git:
         repo: https://github.com/zsh-users/zsh-syntax-highlighting.git
-        dest: ${ZSH_CUSTOM:-/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+        dest: ~{{ remote_regular_user }}/.oh-my-zsh/custom/plugins
     
     - name: clone oh-my-zsh powerlevel10k
       ansible.builtin.git:
         repo: https://github.com/romkatv/powerlevel10k.git
-        dest: ~/.oh-my-zsh/custom/themes
+        dest: ~{{ remote_regular_user }}/.oh-my-zsh/custom/themes
 
     - name: Links .p10k.zsh file | file
       file:
