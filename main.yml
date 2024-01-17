@@ -27,6 +27,8 @@
           - fzf
           - unzip
           - tar
+          - build-essentials
+          - npm
         state: present
 
     - name: Sets zsh as default shell for my user | command
