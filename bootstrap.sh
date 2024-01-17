@@ -4,7 +4,7 @@
 sudo apt-get update && sudo apt-get install -y ansible
 
 # Runs the first Ansible playbook using our user.
-ansible-playbook -vvv ~/main.yml --ask-become-pass
+ansible-playbook -vvv ~/.dotfiles/main.yml --ask-become-pass
 
 if [ -f ~/.ssh/github_ssh ]; then 
   echo "File exists!"
