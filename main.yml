@@ -117,7 +117,7 @@
     - name: Install neovim
       ansible.builtin.shell:
       become: true
-      become_user: {{ lookup('env', 'USER') }}
+      become_user: "{{ lookup('env', 'USER') }}"
       cmd: |
           curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage -o ~/nvim.appimage
           chmod u+x nvim.appimage
