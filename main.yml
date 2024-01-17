@@ -52,6 +52,21 @@
         force: yes
         follow: no
 
+    - name: clone zsh-autosuggestions
+      ansible.builtin.git:
+        repo: https://github.com/zsh-users/zsh-autosuggestions.git
+        dest: ~/.oh-my-zsh/custom/plugins
+
+    - name: clone zsh-sytnax highlighting
+      ansible.builtin.git:
+        repo: https://github.com/zsh-users/zsh-syntax-highlighting.git
+        dest: ~/.oh-my-zsh/custom/plugins
+    
+    - name: clone oh-my-zsh powerlevel10k
+      ansible.builtin.git:
+        repo: https://github.com/romkatv/powerlevel10k.git
+        dest: ~/.oh-my-zsh/custom/themes
+
     - name: Links .p10k.zsh file | file
       file:
         src: "~{{ remote_regular_user }}/.dotfiles/.p10k.zsh"
