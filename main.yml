@@ -116,11 +116,17 @@
         cmd: sudo apt install libfuse2
 
     - name: Install neovim
-      ansible.builtin.shell:
-        cmd: |
-          curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage -o ~/nvim.appimage
-          chmod u+x nvim.appimage
-          ln -sf ~/.dotfiles/nvim.appimage /usr/bin/nvim
+      ansible.builtin.get_url:
+        url: https://github.com/neovim/neovim/releases/latest/download/nvim.appimage 
+        dest: /usr/local/bin/nvim
+        mode: 'u+x'
+
+    - name: Set ownership and permissions for nvim
+      ansible.builtin.file:
+        path: /usr/local/bin/nvim
+        owner: "{{ ansible_env.USER }}"
+        group: "{{ ansible_env.USER }}"
+        mode: '0755'
     
     - name: copy nvim setup
       ansible.builtin.copy:
