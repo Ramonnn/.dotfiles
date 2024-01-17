@@ -57,10 +57,10 @@
         repo: https://github.com/zsh-users/zsh-autosuggestions.git
         dest: ~/.oh-my-zsh/custom/plugins
 
-    - name: clone zsh-sytnax highlighting
+    - name: clone zsh-sytnax-highlighting
       ansible.builtin.git:
         repo: https://github.com/zsh-users/zsh-syntax-highlighting.git
-        dest: ~/.oh-my-zsh/custom/plugins
+        dest: ${ZSH_CUSTOM:-/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
     
     - name: clone oh-my-zsh powerlevel10k
       ansible.builtin.git:
