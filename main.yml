@@ -5,7 +5,7 @@
     git_username: Ramonnn
     git_email: 29675067+Ramonnn@users.noreply.github.com
     git_defaultbranch: main
-    repo: "git@github.com:Ramonnn/lazy-nvim-setup.git"
+    repo: "https://github.com/Ramonnn/lazy-nvim-setup.git"
     dest: "~/.config/nvim/"
   become: true
   connection: local

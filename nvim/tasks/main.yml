@@ -1,4 +1,0 @@
-- name: checkout and clone git repo
-  git:
-    repo: "{{ repo }}"
-    dest: "{{ dest }}"
