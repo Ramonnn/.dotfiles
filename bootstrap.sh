@@ -13,9 +13,10 @@ else
   eval "$(ssh-agent -s)"
   ssh-add ~/.ssh/github_ssh
   ssh-keyscan -t ed25519 github.com >> ~/.ssh/known_hosts
+
+  # Prompt the public ssh key
+  cat ~/.ssh/github_ssh.pub
+  echo "Add the public key to your GitHub account. Press Enter to continue..."
+  read -r
 fi
-# Prompt the public ssh key
-cat ~/.ssh/github_ssh.pub
-echo "Add the public key to your GitHub account. Press Enter to continue..."
-read -r
 
