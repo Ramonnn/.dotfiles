@@ -25,6 +25,8 @@
           - zsh
           - tmux
           - fzf
+          - unzip
+          - tar
         state: present
 
     - name: Sets zsh as default shell for my user | command
@@ -107,7 +109,7 @@
     - name: Check if nvim folder exists
       ansible.builtin.stat:
         path: ~{{ remote_regular_user }}/.config/nvim
-      register: folder_stat
+      register: nvim_folder_stat
 
     - name: symlink nvim setup
       ansible.builtin.file:
@@ -116,7 +118,7 @@
         state: link
         force: yes
         owner: "{{ remote_regular_user }}"
-      when: not folder_stat
+      when: not nvim_folder_stat
 
     - name: Esure fonts directory
       ansible.builtin.file:
@@ -126,13 +128,12 @@
         owner: "{{ remote_regular_user }}"
 
     - name: Check if Jetbrains Mono exists
-      ansible.builtin.shell: "ls ~{{ remote_regular_user }}/.fonts/JetBrainsMonoNerd*FontMono*"
+      ansible.builtin.stat:
+        path: ~{{ remote_regular_user }}/.fonts/JetBrainsMonoNerd*FontMono*
       register: jetbrains_mono_exists
-      ignore_errors: true
-      changed_when: false
 
     - name: Download JetBrains Mono
-      when: jetbrains_mono_exists is failed
+      when: not jetbrains_mono_exists
       ansible.builtin.unarchive:
         src: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/JetBrainsMono.zip
         dest: "~{{ remote_regular_user }}/.fonts/"
