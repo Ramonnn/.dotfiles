@@ -91,11 +91,16 @@
         state: directory
         mode: "0755"
         owner: "{{ remote_regular_user }}"
-    
+
+    - name: Install fuse2
+      ansible.builtin.shell:
+        cmd: |
+          sudo apt install libfuse2
+
     - name: Install neovim
       ansible.builtin.shell:
         cmd: |
-          get_url -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+          curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
           chmod u+x nvim.appimage
           ./nvim.appimage
           sudo ln -s ~/.dotfiles/nvim.appimage /usr/bin/nvim
