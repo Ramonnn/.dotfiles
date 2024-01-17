@@ -20,3 +20,9 @@ else
   read -r
 fi
 
+if [ -d ~/.local/share/fonts ]; then 
+  mv ~/.fonts/JetBrainsMonoNerdFontMono-Regular.ttf ~/.local/share/fonts/
+else
+  sudo mkdir ~/.local/share/fonts
+  sudo mv ~/.fonts/JetBrainsMonoNerdFontMono-Regular.ttf ~/.local/share/fonts/
+fi
