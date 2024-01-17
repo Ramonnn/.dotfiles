@@ -121,19 +121,12 @@
           sudo chmod u+x nvim.appimage
           sudo ln -sf ~/.dotfiles/nvim.appimage /usr/bin/nvim
     
-    - name: Check if nvim folder exists
-      ansible.builtin.stat:
-        path: ~{{ remote_regular_user }}/.config/nvim
-      register: nvim_folder_stat
-
-    - name: symlink nvim setup
-      ansible.builtin.file:
+    - name: copy nvim setup
+      ansible.builtin.copy:
         src: "~{{ remote_regular_user }}/.dotfiles/nvim"
-        dest: "~{{ remote_regular_user }}/.config/nvim"
-        state: link
-        force: yes
+        dest: "~{{ remote_regular_user }}/.config"
+        state: directory
         owner: "{{ remote_regular_user }}"
-      when: nvim_folder_stat.stat.exists
 
     - name: Esure fonts directory
       ansible.builtin.file:
