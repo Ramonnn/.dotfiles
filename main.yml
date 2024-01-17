@@ -111,8 +111,7 @@
 
     - name: Install fuse2
       ansible.builtin.shell:
-        cmd: |
-          sudo apt install libfuse2
+        cmd: sudo apt install libfuse2
 
     - name: Install neovim
       become: true
