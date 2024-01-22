@@ -29,6 +29,7 @@
           - tar
           - build-essential
           - npm
+          - pipx
         state: present
 
     - name: Sets zsh as default shell for my user | command

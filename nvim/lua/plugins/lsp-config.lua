@@ -39,7 +39,7 @@ return {
 				capabilities = capabilities
 			})
 			lspconfig.pyright.setup({
-				capabilities = capabilities
+				capabilities = capabilities,
 			})
 			lspconfig.ansiblels.setup({
 				capabilities = capabilities
